@@ -3,60 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Climate Change Awareness</title>
+    <title>GreenStride</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Climate Change Awareness</h1>
-            <p>Visualize and understand climate change impacts</p>
+            <div class="logo">
+                <span class="logo-icon">🌱</span>
+                <span class="logo-text">GreenStride</span>
+            </div>
         </header>
 
-        <div class="input-section">
-            <input type="text" id="place" placeholder="Enter location" required>
-            <input type="text" id="issue" placeholder="Describe climate issue" required>
-            <button id="generate-btn">Generate Visualizations</button>
-        </div>
+        <main>
+            <div class="hero-section">
+                <div class="globe-visual">
+                    <!-- Add globe SVG or image here -->
+                </div>
+                <h1>Planting Green,<br>Growing Life</h1>
+                <p>Your investment is susceptible to greater vulnerability from external influences.</p>
+            </div>
 
-        <div class="generated-images">
-            <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 1">
-                <div class="image-info">
-                    <span>DALL-E</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
+            <div class="stats-card">
+                <div class="stat-item">
+                    <div class="stat-icon">🌳</div>
+                    <div class="stat-value">11,234</div>
+                    <div class="stat-label">Trees</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value">0.04 mg/m³</div>
+                    <div class="stat-label">Total CO2</div>
                 </div>
             </div>
 
-            <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 2">
-                <div class="image-info">
-                    <span>Stable Diffusion</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
+            <div class="input-section">
+                <input type="text" id="place" placeholder="Enter location" required>
+                <input type="text" id="issue" placeholder="Environmental concern" required>
+                <button id="generate-btn">Get Started</button>
             </div>
 
-            <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 3">
-                <div class="image-info">
-                    <span>Hugging Face</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
+            <div class="performance-section">
+                <h2>Your Performance</h2>
+                <div class="visual-metrics">
+                    <div class="circular-chart"></div>
+                    <div class="progress-graph"></div>
                 </div>
             </div>
-        </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-item active"><span>🏠</span></button>
+            <button class="nav-item"><span>📊</span></button>
+            <button class="nav-item main-action"><span>🌱</span></button>
+            <button class="nav-item"><span>⚙️</span></button>
+            <button class="nav-item"><span>👤</span></button>
+        </nav>
     </div>
     <script src="script.js"></script>
 </body>
