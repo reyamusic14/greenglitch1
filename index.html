@@ -3,29 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Generator</title>
+    <title>Climate Change Awareness</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>AI Image Generator</h1>
+        <header>
+            <h1>Climate Change Awareness</h1>
+            <p>Visualize and understand climate change impacts</p>
+        </header>
+
         <div class="input-section">
-            <input type="text" id="place" placeholder="Enter a place...">
-            <input type="text" id="issue" placeholder="Enter an issue...">
-            <button id="generate-btn" onclick="handleGenerate()">Generate</button>
+            <input type="text" id="place" placeholder="Enter location" required>
+            <input type="text" id="issue" placeholder="Describe climate issue" required>
+            <button id="generate-btn">Generate Visualizations</button>
         </div>
-        <div class="image-container">
+
+        <div class="generated-images">
             <div class="image-card">
-                <h3>DALL-E</h3>
-                <img id="dalle-image" src="placeholder.png" alt="DALL-E generated image">
+                <img src="https://via.placeholder.com/300" alt="AI Generated Image 1">
+                <div class="image-info">
+                    <span>DALL-E</span>
+                    <div class="image-actions">
+                        <button class="action-btn save-btn">💾</button>
+                        <button class="action-btn share-btn">📤</button>
+                        <button class="action-btn like-btn">❤️</button>
+                    </div>
+                </div>
             </div>
+
             <div class="image-card">
-                <h3>Stable Diffusion</h3>
-                <img id="sd-image" src="placeholder.png" alt="Stable Diffusion generated image">
+                <img src="https://via.placeholder.com/300" alt="AI Generated Image 2">
+                <div class="image-info">
+                    <span>Stable Diffusion</span>
+                    <div class="image-actions">
+                        <button class="action-btn save-btn">💾</button>
+                        <button class="action-btn share-btn">📤</button>
+                        <button class="action-btn like-btn">❤️</button>
+                    </div>
+                </div>
             </div>
+
             <div class="image-card">
-                <h3>Hugging Face</h3>
-                <img id="hf-image" src="placeholder.png" alt="Hugging Face generated image">
+                <img src="https://via.placeholder.com/300" alt="AI Generated Image 3">
+                <div class="image-info">
+                    <span>Hugging Face</span>
+                    <div class="image-actions">
+                        <button class="action-btn save-btn">💾</button>
+                        <button class="action-btn share-btn">📤</button>
+                        <button class="action-btn like-btn">❤️</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
