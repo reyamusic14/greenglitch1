@@ -25,10 +25,13 @@ function handleGenerate() {
     })
     .then(response => response.json())
     .then(data => {
-        // Update images
-        document.getElementById('dalle-image').src = data.images[0];
-        document.getElementById('sd-image').src = data.images[1];
-        document.getElementById('hf-image').src = data.images[2];
+        // Update all image cards
+        const imageCards = document.querySelectorAll('.image-card img');
+        data.images.forEach((imageUrl, index) => {
+            if (imageCards[index]) {
+                imageCards[index].src = imageUrl;
+            }
+        });
     })
     .catch(error => {
         console.error('Error generating images:', error);
@@ -37,6 +40,43 @@ function handleGenerate() {
     .finally(() => {
         // Reset button state
         generateBtn.disabled = false;
-        generateBtn.textContent = 'Generate';
+        generateBtn.textContent = 'Generate Visualizations';
     });
-} 
+}
+
+// Add event listeners for action buttons
+document.addEventListener('DOMContentLoaded', () => {
+    // Save button functionality
+    document.querySelectorAll('.save-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const img = this.closest('.image-card').querySelector('img');
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = 'climate-visualization.png';
+            link.click();
+        });
+    });
+
+    // Share button functionality
+    document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const img = this.closest('.image-card').querySelector('img');
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Climate Change Visualization',
+                    text: 'Check out this climate change visualization',
+                    url: img.src
+                });
+            } else {
+                alert('Sharing is not supported on this browser');
+            }
+        });
+    });
+
+    // Like button functionality
+    document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.textContent = this.textContent === '❤️' ? '💚' : '❤️';
+        });
+    });
+}); 
