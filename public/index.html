@@ -1,63 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Climate Change Awareness</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Climate Change Awareness</h1>
-            <p>Visualize and understand climate change impacts</p>
-        </header>
+function handleGenerate() {
+    const place = document.getElementById('place').value;
+    const issue = document.getElementById('issue').value;
 
-        <div class="input-section">
-            <input type="text" id="place" placeholder="Enter location" required>
-            <input type="text" id="issue" placeholder="Describe climate issue" required>
-            <button id="generate-btn">Generate Visualizations</button>
-        </div>
+    if (!place || !issue) {
+        alert('Please fill in both fields');
+        return;
+    }
 
-        <div class="generated-images">
-            <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 1">
-                <div class="image-info">
-                    <span>DALL-E</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
-            </div>
+    // Show loading state
+    const generateBtn = document.getElementById('generate-btn');
+    generateBtn.disabled = true;
+    generateBtn.textContent = 'Generating...';
 
-            <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 2">
-                <div class="image-info">
-                    <span>Stable Diffusion</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
-            </div>
+    // Prepare the prompt for AI
+    const prompt = `Show the impact of ${issue} on ${place} in a realistic style`;
 
-            <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 3">
-                <div class="image-info">
-                    <span>Hugging Face</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html> 
+    // Make API call to backend
+    fetch('/api/generate-images', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update all image cards
+        const imageCards = document.querySelectorAll('.image-card img');
+        data.images.forEach((imageUrl, index) => {
+            if (imageCards[index]) {
+                imageCards[index].src = imageUrl;
+            }
+        });
+    })
+    .catch(error => {
+        console.error('Error generating images:', error);
+        alert('Error generating images. Please try again.');
+    })
+    .finally(() => {
+        // Reset button state
+        generateBtn.disabled = false;
+        generateBtn.textContent = 'Generate Visualizations';
+    });
+}
+
+// Add event listeners for action buttons
+document.addEventListener('DOMContentLoaded', () => {
+    // Save button functionality
+    document.querySelectorAll('.save-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const img = this.closest('.image-card').querySelector('img');
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = 'climate-visualization.png';
+            link.click();
+        });
+    });
+
+    // Share button functionality
+    document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const img = this.closest('.image-card').querySelector('img');
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Climate Change Visualization',
+                    text: 'Check out this climate change visualization',
+                    url: img.src
+                });
+            } else {
+                alert('Sharing is not supported on this browser');
+            }
+        });
+    });
+
+    // Like button functionality
+    document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.textContent = this.textContent === '❤️' ? '💚' : '❤️';
+        });
+    });
+}); 
