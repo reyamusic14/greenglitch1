@@ -48,13 +48,6 @@ function handleGenerate() {
         return;
     }
 
-    // API Keys - Store these securely in environment variables in production!
-    const API_KEYS = {
-        DALLE_API_KEY: 'your-dalle-api-key',
-        STABLE_DIFFUSION_API_KEY: 'your-stable-diffusion-api-key',
-        HUGGINGFACE_API_KEY: 'your-huggingface-api-key'
-    };
-
     // Show loading state
     const generateBtn = document.getElementById('generate-btn');
     generateBtn.disabled = true;
@@ -63,15 +56,17 @@ function handleGenerate() {
     // Prepare the prompt for AI
     const prompt = `Show the impact of ${issue} on ${place} in a realistic style`;
 
-    // Make parallel API calls to different AI services
-    Promise.all([
-        generateDallEImage(prompt, API_KEYS.DALLE_API_KEY),
-        generateStableDiffusionImage(prompt, API_KEYS.STABLE_DIFFUSION_API_KEY),
-        generateHuggingFaceImage(prompt, API_KEYS.HUGGINGFACE_API_KEY)
-    ])
-    .then(images => {
-        // Update the image cards in the DOM
-        updateImageCards(images);
+    // Make API call to backend
+    fetch('/api/generate-images', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+    })
+    .then(response => response.json())
+    .then(data => {
+        updateImageCards(data.images);
     })
     .catch(error => {
         console.error('Error generating images:', error);
@@ -82,69 +77,6 @@ function handleGenerate() {
         generateBtn.disabled = false;
         generateBtn.textContent = 'Generate';
     });
-}
-
-// Helper functions for API calls
-async function generateDallEImage(prompt, apiKey) {
-    const response = await fetch('https://api.openai.com/v1/images/generations', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-            prompt: prompt,
-            n: 1,
-            size: '1024x1024'
-        })
-    });
-
-    const data = await response.json();
-    return data.data[0].url;
-}
-
-async function generateStableDiffusionImage(prompt, apiKey) {
-    const response = await fetch('https://api.stability.ai/v1/generation/stable-diffusion-xl-1024-v1-0/text-to-image', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-        },
-        body: JSON.stringify({
-            text_prompts: [{ text: prompt }],
-            cfg_scale: 7,
-            height: 1024,
-            width: 1024,
-            steps: 30,
-            samples: 1
-        })
-    });
-
-    const data = await response.json();
-    return data.artifacts[0].base64; // You might need to convert base64 to URL
-}
-
-async function generateHuggingFaceImage(prompt, apiKey) {
-    const response = await fetch('https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            inputs: prompt,
-            parameters: {
-                num_inference_steps: 30,
-                guidance_scale: 7.5,
-                width: 1024,
-                height: 1024
-            }
-        })
-    });
-
-    // The API returns the image directly as a blob
-    const blob = await response.blob();
-    return URL.createObjectURL(blob);
 }
 
 function updateImageCards(images) {
