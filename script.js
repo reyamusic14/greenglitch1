@@ -1,50 +1,42 @@
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
+function handleGenerate() {
+    const place = document.getElementById('place').value;
+    const issue = document.getElementById('issue').value;
 
-.input-section {
-    margin: 20px 0;
-    display: flex;
-    gap: 10px;
-}
+    if (!place || !issue) {
+        alert('Please fill in both fields');
+        return;
+    }
 
-.image-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
+    // Show loading state
+    const generateBtn = document.getElementById('generate-btn');
+    generateBtn.disabled = true;
+    generateBtn.textContent = 'Generating...';
 
-.image-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-}
+    // Prepare the prompt for AI
+    const prompt = `Show the impact of ${issue} on ${place} in a realistic style`;
 
-.image-card img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-}
-
-input, button {
-    padding: 10px;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-button:disabled {
-    background-color: #ccc;
+    // Make API call to backend
+    fetch('/api/generate-images', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt })
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update images
+        document.getElementById('dalle-image').src = data.images[0];
+        document.getElementById('sd-image').src = data.images[1];
+        document.getElementById('hf-image').src = data.images[2];
+    })
+    .catch(error => {
+        console.error('Error generating images:', error);
+        alert('Error generating images. Please try again.');
+    })
+    .finally(() => {
+        // Reset button state
+        generateBtn.disabled = false;
+        generateBtn.textContent = 'Generate';
+    });
 } 
