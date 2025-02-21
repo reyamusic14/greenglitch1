@@ -3,99 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Climate Change Awareness</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>AI Image Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Climate Change Awareness</h1>
-            <p>Visualize and understand climate change impacts</p>
-        </header>
-
+        <h1>AI Image Generator</h1>
         <div class="input-section">
-            <input type="text" id="place" placeholder="Enter location" required>
-            <input type="text" id="issue" placeholder="Describe climate issue" required>
-            <button id="generate-btn">Generate Visualizations</button>
+            <input type="text" id="place" placeholder="Enter a place...">
+            <input type="text" id="issue" placeholder="Enter an issue...">
+            <button id="generate-btn" onclick="handleGenerate()">Generate</button>
         </div>
-
-        <div class="generated-images">
+        <div class="image-container">
             <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 1">
-                <div class="image-info">
-                    <span>AI Platform 1</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
+                <h3>DALL-E</h3>
+                <img id="dalle-image" src="placeholder.png" alt="DALL-E generated image">
             </div>
-
             <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 2">
-                <div class="image-info">
-                    <span>AI Platform 2</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
+                <h3>Stable Diffusion</h3>
+                <img id="sd-image" src="placeholder.png" alt="Stable Diffusion generated image">
             </div>
-
             <div class="image-card">
-                <img src="https://via.placeholder.com/300" alt="AI Generated Image 3">
-                <div class="image-info">
-                    <span>AI Platform 3</span>
-                    <div class="image-actions">
-                        <button class="action-btn save-btn">💾</button>
-                        <button class="action-btn share-btn">📤</button>
-                        <button class="action-btn like-btn">❤️</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="info-tabs">
-            <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="causes">Causes</button>
-                <button class="tab-btn" data-tab="effects">Effects</button>
-                <button class="tab-btn" data-tab="solutions">Solutions</button>
-            </div>
-
-            <div class="tab-content active" id="causes">
-                <h3>Causes of Climate Change</h3>
-                <ul>
-                    <li>Greenhouse gas emissions</li>
-                    <li>Deforestation</li>
-                    <li>Industrial activities</li>
-                    <li>Transportation emissions</li>
-                </ul>
-            </div>
-
-            <div class="tab-content" id="effects">
-                <h3>Effects of Climate Change</h3>
-                <ul>
-                    <li>Rising global temperatures</li>
-                    <li>Extreme weather events</li>
-                    <li>Sea level rise</li>
-                    <li>Loss of biodiversity</li>
-                </ul>
-            </div>
-
-            <div class="tab-content" id="solutions">
-                <h3>Solutions</h3>
-                <ul>
-                    <li>Renewable energy adoption</li>
-                    <li>Sustainable transportation</li>
-                    <li>Forest conservation</li>
-                    <li>Reducing waste and recycling</li>
-                </ul>
+                <h3>Hugging Face</h3>
+                <img id="hf-image" src="placeholder.png" alt="Hugging Face generated image">
             </div>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
-</html>
+</html> 
